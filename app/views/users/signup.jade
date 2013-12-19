@@ -1,14 +1,16 @@
 extends auth
 
 block auth
+  h1 Regístrate
+  hr
   form.signup.form-horizontal(action="signup", method="post")
     .control-group
-      label.control-label(for='name') First name
+      label.control-label(for='name') Nombres
       .controls
         input#name(type='text', name="first_name", placeholder='First name', value=user.first_name)
 
     .control-group
-      label.control-label(for='name') Last name
+      label.control-label(for='name') Apellidos
       .controls
         input#name(type='text', name="last_name", placeholder='Last name', value=user.last_name)
 
@@ -18,17 +20,17 @@ block auth
         input#email(type='text', name="email", placeholder='Email', value=user.email)
 
     .control-group
-      label.control-label(for='username') Username
+      label.control-label(for='username') Nombre de usuario
       .controls
         input#username(type='text', name="username", placeholder='Username', value=user.username)
 
     .control-group
-      label.control-label(for='password') Password
+      label.control-label(for='password') Contraseña
       .controls
         input#password(type='password', name="password", placeholder='Password')
 
     .form-actions
-      button.btn.btn-primary(type='submit') Sign up
+      button.btn.btn-primary(type='submit') Registrarse
       &nbsp;
       | or&nbsp;
-      a.show-login(href="/signin") login
+      a.show-login(href="/signin") Entrar

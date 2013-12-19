@@ -1,5 +1,5 @@
 module.exports = {
-    db: "mongodb://tli:tli@paulo.mongohq.com:10018/mappeame",
+    db: "mongodb://localhost/mappeame",
     app: {
         name: "TLI-1"
     },

@@ -28,7 +28,17 @@ module.exports = function(app) {
 	  });
 
 	  socket.on("user:quit",function(data){
-	    console.log(data);
+
+	  	for(var i in users){
+	  		if(users[i] != undefined){
+		  		if(users[i]._id == data._id){
+		  			users = users.slice(i,0);
+		  		}
+		  	}
+	  	};
+
+	  	console.log("USER QUIT : ",users);
+
 	    socket.broadcast.emit("user:quit",data);
 	  });
 

@@ -1,14 +1,16 @@
 extends auth
 
 block auth
+  h1 Ingresa
+  hr
   form.signin.form-horizontal(action="/users/session", method="post")
     .control-group
-      label.control-label(for='username') Username
+      label.control-label(for='username') Nombre de usuario
       .controls
         input#email(type='text', name="username", placeholder='Username')
 
     .control-group
-      label.control-label(for='password') Password
+      label.control-label(for='password') Contraseña
       .controls
         input#password(type='password', name="password", placeholder='Password')
 

@@ -18,54 +18,54 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
         zoom: 8, // the zoom level,
     });
 
-    Geo();
+    if($scope.global.user != null){
+        Geo();
 
-    $scope.$on("locationChanged", function (event, parameters) {
-        $scope.coords= parameters.coordinates;
+        $scope.$on("locationChanged", function (event, parameters) {
+            $scope.coords= parameters.coordinates;
 
-        var user = $scope.global.user;
+            var user = $scope.global.user;
 
-         Users.get({
-            userId: user._id
-        }, function(user) {
+             Users.get({
+                userId: user._id
+            }, function(user) {
 
-            console.log("USER ==> ",user);
+                if (!user.updated) user.updated = [];
 
-            if (!user.updated) user.updated = [];
+                user.updated.push(new Date().getTime());
+                user.latitude = $scope.coords.latitude;
+                user.longitude = $scope.coords.longitude;
 
-            user.updated.push(new Date().getTime());
-            user.latitude = $scope.coords.latitude;
-            user.longitude = $scope.coords.longitude;
-
-            user.$update(function(u){
-                console.log("USER UPDATED : ",u);
+                user.$update(function(u){
+                    console.log("USER UPDATED : ",u);
+                });
             });
+
+            var position = {
+            	latitude : $scope.coords.latitude,
+            	longitude : $scope.coords.longitude
+            };
+
+            $scope.center = position;
+
+            $scope.zoom = 15;
+
+            $scope.markers.push({
+            	latitude : $scope.coords.latitude,
+            	longitude : $scope.coords.longitude,
+            	title : $scope.global.user.first_name + " " + $scope.global.user.last_name,
+                id : $scope.global.user._id
+            });
+
         });
-
-        var position = {
-        	latitude : $scope.coords.latitude,
-        	longitude : $scope.coords.longitude
-        };
-
-        $scope.center = position;
-
-        $scope.zoom = 15;
-
-        console.log("COORDS : ", $scope.coords);
-
-        $scope.markers.push({
-        	latitude : $scope.coords.latitude,
-        	longitude : $scope.coords.longitude,
-        	title : "Daniel"
-        });
-
-    });
+    }
 
     /**
     * Sockets
     */
 
-    socket.emit("user:join", $scope.global.user);
+    if($scope.global.user != null)
+        socket.emit("user:join", $scope.global.user);
 
     socket.on('user:join', function (data) {
         console.log("user:join",data);
@@ -78,15 +78,29 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             }
         }
 
-        if(!exists)
+        if(!exists){
             $scope.users.push(data);
+            $scope.markers.push({
+                latitude : data.latitude,
+                longitude : data.longitude,
+                title : data.first_name + " " + data.last_name,
+                _id : data._id
+            })
+        }
     });
 
     socket.on('user:quit', function (data) {
         console.log("user:quit",data);
+
         for(var i in $scope.users){
             if($scope.users[i]._id == data._id){
-                $scope.users.slice(i,1);
+               $scope.users =  $scope.users.slice(i,1);
+            }
+        }
+
+        for(var i in $scope.markers){
+            if($scope.markers[i]._id == data._id){
+               $scope.markers = $scope.markers.slice(i,1);
             }
         }
     });
@@ -117,9 +131,14 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             $scope.markers.push({
                 latitude : $scope.users[i].latitude,
                 longitude : $scope.users[i].longitude,
-                title : $scope.users[i].first_name + " " + $scope.users[i].last_name
+                title : $scope.users[i].first_name + " " + $scope.users[i].last_name,
+                _id : $scope.users[i]._id
             });
         }
+    });
+
+    $(window).bind('beforeunload',function(){
+       return socket.emit('user:quit',$scope.global.user);
     });
 
     /**
