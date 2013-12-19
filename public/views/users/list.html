@@ -1,0 +1,12 @@
+<section data-ng-controller="UserController" data-ng-init="find()">
+
+	<ul class="articles unstyled">
+		<li data-ng-repeat="user in users">
+			<span>{{user.first_name}} {{user.last_name}}</span>
+			<h2><a data-ng-href="#!/users/{{user._id}}">{{user.username}}</a></h2>
+			<div>{{user.email}}</div>
+		</li>
+	</ul>
+
+	<h1 data-ng-hide="!users || users.length">No users yet.</h1>
+</section>

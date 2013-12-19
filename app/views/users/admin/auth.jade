@@ -1,0 +1,13 @@
+extends ../../layouts/admin
+
+block admin
+  .row
+    br
+    h1 Administrador
+    hr
+    .span12
+      if message && message.length
+        .fade.in.alert.alert-error
+          button.close(type="button", data-dismiss="alert") &times;
+          strong #{message}
+      block auth

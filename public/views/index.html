@@ -1,0 +1,50 @@
+<section data-ng-controller="IndexController">
+
+	<div class="google-map" center="center" zoom="zoom" draggable="true" mark-click="true" refresh="true">
+        <layer show="true"></layer>
+        
+        <markers models="markers" coords="'self'" icon="'icon'" click="'onClicked'" labelContent="'title'" labelAnchor="22 0" labelClass="marker-labels">
+        	<windows show="'showWindow'" closeClick="false" >
+                <p ng-non-bindable>This is an info window at {{ latitude | number:4 }}, {{ longitude | number:4 }}!</p>
+                <p class="muted">My marker will stay open when the window is popped up!</p>
+            </windows>
+        </markers>
+    </div>
+
+    <div class="tli-chat">
+    	<div class="tli-chat-inner">
+	    	
+	    	<div class="tli-chat-board">
+	    		<div class="tli-chat-board-inner">
+	    			<div class="tli-chat-message" ng-repeat="msg in messages">
+		    			<div class="tli-chat-message-header clearfix">
+		    				<div class="tli-chat-message-header-user-picture pull-left">
+		    					<img width="30" height="30" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn2/1118007_1440246516_1107924284_q.jpg"/>
+		    				</div>
+		    				<div class="tli-chat-message-header-user-data pull-left">
+		    					<strong>{{msg.user.first_name}} {{msg.user.last_name}}</strong><br/>
+		    					<a ng-click="showLocation(msg.user)"><i class="fa fa-map-marker"></i> Ver ubicación</a>
+		    				</div>
+		    			</div>
+		    			<div class="tli-chat-message-body">
+		    				<p>{{msg.message}}</p>
+		    			</div>	
+		    			<div class="tli-chat-message-footer">
+
+		    			</div>
+		    			
+		    		</div>
+		    	</div>
+	    	</div>
+
+	    	<div class="tli-chat-form">
+	    		<form ng-submit="sendMessage()">
+	    			<input autofocus ng-model="message" type="text" placeholder="Escribir mensaje"/>
+	    		</form>
+	    	</div>
+
+	    </div>
+    </div>
+
+</section>
+

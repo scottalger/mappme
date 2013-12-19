@@ -1,0 +1,14 @@
+<section data-ng-controller="UserController" data-ng-init="findOne()">
+    <span>{{user.id | date:'medium'}}</span>/
+    <span>{{user.first_name}} {{user.last_name}}</span>
+    <h2>{{user.username}}</h2>
+    <div data-ng-show="global.user.role == 1">
+        <a class="btn" href="/#!/users/{{user._id}}/edit">
+        	<i class="icon-edit"></i>
+        </a> 
+        <a class="btn" data-ng-click="remove();">
+            <i class="icon-trash"></i>
+        </a>
+    </div>
+    <div>{{user.email}}</div>
+</section>

@@ -1,0 +1,17 @@
+extends auth
+
+block auth
+  form.signin.form-horizontal(action="/admin/session", method="post")
+    .control-group
+      label.control-label(for='username') Username
+      .controls
+        input#email(type='text', name="username", placeholder='username')
+
+    .control-group
+      label.control-label(for='password') Password
+      .controls
+        input#password(type='password', name="password", placeholder='Password')
+
+    .form-actions
+      button.btn.btn-primary(type='submit') Sign in
+      &nbsp;
