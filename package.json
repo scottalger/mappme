@@ -4,10 +4,6 @@
     "version": "0.1.0",
     "private": false,
     "author": "Daniel Flores",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/linnovate/mean.git"
-    },
     "engines": {
         "node": "0.10.x",
         "npm": "1.2.x"
@@ -15,7 +11,7 @@
     "scripts": {
         "start": "node node_modules/grunt-cli/bin/grunt",
         "test": "node node_modules/grunt-cli/bin/grunt test",
-        "postinstall": "node node_modules/bower/bin/bower install"
+        "postinstall": "./node_modules/bower/bin/bower install"
     },
     "dependencies": {
         "socket.io" : "latest",
